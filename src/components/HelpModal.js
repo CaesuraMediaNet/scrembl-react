@@ -10,6 +10,7 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
+import QuizIcon            from '@mui/icons-material/Quiz';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -61,9 +62,8 @@ export default function HelpModal() {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Help!
-      </Button>
+      <QuizIcon color="action" fontSize="large" onClick={handleClickOpen}>
+      </QuizIcon>
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"

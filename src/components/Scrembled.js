@@ -1,6 +1,7 @@
 import TextField           from '@mui/material/TextField';
 import Button              from '@mui/material/Button';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import NoEncryptionGmailerrorredIcon from '@mui/icons-material/NoEncryptionGmailerrorred';
 
 export default function Scrembled ({
 	scrembledInputRef,
@@ -25,7 +26,8 @@ export default function Scrembled ({
 				/>
 			</div>
 			<Button
-				variant="contained"
+				startIcon={<NoEncryptionGmailerrorredIcon />}
+				variant="outlined"
 				onClick={() => unscremble()}
 			>
 				UnScrembl

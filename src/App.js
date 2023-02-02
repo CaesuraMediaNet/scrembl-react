@@ -7,6 +7,7 @@ import HelpModal           from './components/HelpModal.js';
 import Message             from './components/Message.js';
 import Scrembled           from './components/Scrembled.js';
 import UnScrembled         from './components/UnScrembled.js';
+import DeleteOutlineIcon   from '@mui/icons-material/DeleteOutline';
 import './App.css';
 
 function App() {
@@ -46,16 +47,11 @@ function App() {
 
   return (
     <div style={{width : "70%", margin : "10%"}} >
-			<h1>Scremble - Obfusticate messages</h1>
-
-			<Button
-				variant="contained"
-				onClick={() => clearText()}
-			>
-				Clear
-			</Button>
-
-			<HelpModal />
+			<div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+				<h1>Scremble - Obfusticate messages</h1>
+				<DeleteOutlineIcon color="action" fontSize="large" onClick={() => clearText()}></DeleteOutlineIcon>
+				<HelpModal />
+			</div>
 
 			<Message 
 				messageInputRef={messageInputRef}
@@ -78,7 +74,13 @@ function App() {
 			/>
 
 			<footer>
-				<a href="https://www.scrembl.com/privacy-notice.html">Privacy Notice</a>
+				<a
+					target="_blank"
+					rel="noopener noreferrer"
+					href="https://www.scrembl.com/privacy-notice.html"
+				>
+					Privacy Notice
+				</a>
 			</footer>
     </div>
   );

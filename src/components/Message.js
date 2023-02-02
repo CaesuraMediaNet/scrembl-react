@@ -1,5 +1,6 @@
 import TextField           from '@mui/material/TextField';
 import Button              from '@mui/material/Button';
+import HttpsIcon from '@mui/icons-material/Https';
 
 export default function Message ({messageInputRef, scremble}) {
 	return (
@@ -17,7 +18,8 @@ export default function Message ({messageInputRef, scremble}) {
           />
         </div>
         <Button
-          variant="contained"
+          variant="outlined"
+					startIcon={<HttpsIcon />}
           onClick={() => scremble()}
         >
           Scrembl
