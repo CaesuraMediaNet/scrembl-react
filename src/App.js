@@ -9,16 +9,21 @@ function App() {
 	const scrembledInputRef                       = useRef(null);
 	const unScrembledInputRef                     = useRef(null);
 
+	const [copyScrembledToClipboard, setCopyScrembledToClipboard]     = useState (false);
+	const [copyUnScrembledToClipboard, setCopyUnScrembledToClipboard] = useState (false);
+
 	const scremble = () => {
 		const is_scrembled = "%" + messageInputRef.current.value + "%";
 		scrembledInputRef.current.value = is_scrembled;
 		scrembledInputRef.current.focus();
+		setCopyScrembledToClipboard (true);
   };
 
 	const unscremble = () => {
 		const is_unscrembled = scrembledInputRef.current.value.replace (/%/g, '');
 		unScrembledInputRef.current.value = is_unscrembled;
 		unScrembledInputRef.current.focus();
+		setCopyUnScrembledToClipboard (true);
   };
 
   return (
@@ -63,18 +68,22 @@ function App() {
 				>
 					UnScrembl
 				</Button>
+				{copyScrembledToClipboard && <Button variant="contained">Copy to Clipboard</Button>}
 			</div>
 			<div>
-				<TextField
-						InputLabelProps={{ shrink: true }}
-						inputRef={unScrembledInputRef}
-						id="standard-textarea"
-						label="UnScrembled message here"
-						multiline
-						variant="standard"
-						color="success"
-						style={{width : "70%"}}
-				/>
+				<div>
+					<TextField
+							InputLabelProps={{ shrink: true }}
+							inputRef={unScrembledInputRef}
+							id="standard-textarea"
+							label="UnScrembled message here"
+							multiline
+							variant="standard"
+							color="success"
+							style={{width : "70%"}}
+					/>
+				</div>
+				{copyUnScrembledToClipboard && <Button variant="contained">Copy to Clipboard</Button>}
 			</div>
     </div>
   );
