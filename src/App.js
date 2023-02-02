@@ -2,22 +2,23 @@ import {
 	useRef,
 	useState
 }                          from 'react';
-import TextField           from '@mui/material/TextField';
 import Button              from '@mui/material/Button';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import HelpModal           from './components/HelpModal.js';
+import Message             from './components/Message.js';
+import Scrembled           from './components/Scrembled.js';
+import UnScrembled         from './components/UnScrembled.js';
 import './App.css';
 
 function App() {
 
-	const messageInputRef                         = useRef(null);
-	const scrembledInputRef                       = useRef(null);
-	const unScrembledInputRef                     = useRef(null);
+	const messageInputRef                                             = useRef (null);
+	const scrembledInputRef                                           = useRef (null);
+	const unScrembledInputRef                                         = useRef (null);
 
 	const [copyScrembledToClipboard, setCopyScrembledToClipboard]     = useState (false);
 	const [copyUnScrembledToClipboard, setCopyUnScrembledToClipboard] = useState (false);
-	const [copiedScrembled, setCopiedScrembled]                        = useState (false);
-	const [copiedUnScrembled, setCopiedUnScrembled]                    = useState (false);
+	const [copiedScrembled, setCopiedScrembled]                       = useState (false);
+	const [copiedUnScrembled, setCopiedUnScrembled]                   = useState (false);
 
 	const scremble = () => {
 		const is_scrembled = "%" + messageInputRef.current.value + "%";
@@ -56,82 +57,26 @@ function App() {
 
 			<HelpModal />
 
-			<div style={{ marginBottom : "50px"}}>
-				<div>
-					<TextField
-							InputLabelProps={{ shrink: true }}
-							inputRef={messageInputRef}
-							id="standard-textarea"
-							label="Type message to be Scrembled here"
-							multiline
-							variant="standard"
-							color="success"
-							style={{width : "70%"}}
-					/>
-				</div>
-				<Button
-					variant="contained"
-					onClick={() => scremble()}
-				>
-					Scrembl
-				</Button>
-			</div>
-			<div style={{ marginBottom : "50px"}}>
-				<div>
-					<TextField
-							InputLabelProps={{ shrink: true }}
-							inputRef={scrembledInputRef}
-							id="standard-textarea"
-							label="Scrembled message here"
-							multiline
-							variant="standard"
-							color="success"
-							style={{width : "70%"}}
-					/>
-				</div>
-				<Button
-					variant="contained"
-					onClick={() => unscremble()}
-				>
-					UnScrembl
-				</Button>
-				{
-					copyScrembledToClipboard &&
-						<CopyToClipboard
-							text={scrembledInputRef.current.value}
-							onCopy={() => setCopiedScrembled (true)}
-						>
-							<Button variant="contained">
-								{copiedScrembled ? "Copied to Clipboard!" : "Copy to Clipboard"}
-							</Button>
-						</CopyToClipboard>
-				}
-			</div>
-			<div>
-				<div>
-					<TextField
-							InputLabelProps={{ shrink: true }}
-							inputRef={unScrembledInputRef}
-							id="standard-textarea"
-							label="UnScrembled message here"
-							multiline
-							variant="standard"
-							color="success"
-							style={{width : "70%"}}
-					/>
-				</div>
-				{
-					copyUnScrembledToClipboard &&
-						<CopyToClipboard
-							text={unScrembledInputRef.current.value}
-							onCopy={() => setCopiedUnScrembled (true)}
-						>
-							<Button variant="contained">
-								{copiedUnScrembled ? "Copied to Clipboard!" : "Copy to Clipboard"}
-							</Button>
-						</CopyToClipboard>
-				}
-			</div>
+			<Message 
+				messageInputRef={messageInputRef}
+				scremble={scremble}
+			/>
+
+			<Scrembled
+				  scrembledInputRef={scrembledInputRef}
+					unscremble={unscremble}
+					copyScrembledToClipboard={copyScrembledToClipboard}
+					setCopiedScrembled={setCopiedScrembled}
+					copiedScrembled={copiedScrembled}
+			/>
+
+			<UnScrembled
+				unScrembledInputRef={unScrembledInputRef}
+				copyUnScrembledToClipboard={copyUnScrembledToClipboard}
+				setCopiedUnScrembled={setCopiedUnScrembled}
+				copiedUnScrembled={copiedUnScrembled}
+			/>
+
     </div>
   );
 }
