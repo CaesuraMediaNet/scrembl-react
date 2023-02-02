@@ -1,7 +1,12 @@
-import { useRef, useState } from 'react';
+import {
+	useRef,
+	useState
+}                          from 'react';
+import TextField           from '@mui/material/TextField';
+import Button              from '@mui/material/Button';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import HelpModal           from './components/HelpModal.js';
 import './App.css';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 
 function App() {
 
@@ -11,6 +16,8 @@ function App() {
 
 	const [copyScrembledToClipboard, setCopyScrembledToClipboard]     = useState (false);
 	const [copyUnScrembledToClipboard, setCopyUnScrembledToClipboard] = useState (false);
+	const [copiedScrembled, setCopiedScrembled]                        = useState (false);
+	const [copiedUnScrembled, setCopiedUnScrembled]                    = useState (false);
 
 	const scremble = () => {
 		const is_scrembled = "%" + messageInputRef.current.value + "%";
@@ -26,9 +33,29 @@ function App() {
 		setCopyUnScrembledToClipboard (true);
   };
 
+	const clearText = () => {
+		messageInputRef.current.value     = '';
+		unScrembledInputRef.current.value = '';
+		scrembledInputRef.current.value   = '';
+		setCopiedScrembled                (false);
+		setCopiedUnScrembled              (false);
+		setCopyScrembledToClipboard       (false);
+		setCopyUnScrembledToClipboard     (false);
+	}
+
   return (
     <div style={{width : "70%", margin : "10%"}} >
 			<h1>Scremble - Obfusticate messages</h1>
+
+			<Button
+				variant="contained"
+				onClick={() => clearText()}
+			>
+				Clear
+			</Button>
+
+			<HelpModal />
+
 			<div style={{ marginBottom : "50px"}}>
 				<div>
 					<TextField
@@ -68,7 +95,17 @@ function App() {
 				>
 					UnScrembl
 				</Button>
-				{copyScrembledToClipboard && <Button variant="contained">Copy to Clipboard</Button>}
+				{
+					copyScrembledToClipboard &&
+						<CopyToClipboard
+							text={scrembledInputRef.current.value}
+							onCopy={() => setCopiedScrembled (true)}
+						>
+							<Button variant="contained">
+								{copiedScrembled ? "Copied to Clipboard!" : "Copy to Clipboard"}
+							</Button>
+						</CopyToClipboard>
+				}
 			</div>
 			<div>
 				<div>
@@ -83,7 +120,17 @@ function App() {
 							style={{width : "70%"}}
 					/>
 				</div>
-				{copyUnScrembledToClipboard && <Button variant="contained">Copy to Clipboard</Button>}
+				{
+					copyUnScrembledToClipboard &&
+						<CopyToClipboard
+							text={unScrembledInputRef.current.value}
+							onCopy={() => setCopiedUnScrembled (true)}
+						>
+							<Button variant="contained">
+								{copiedUnScrembled ? "Copied to Clipboard!" : "Copy to Clipboard"}
+							</Button>
+						</CopyToClipboard>
+				}
 			</div>
     </div>
   );
