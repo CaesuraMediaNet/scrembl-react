@@ -77,6 +77,9 @@ function App() {
 				copiedUnScrembled={copiedUnScrembled}
 			/>
 
+			<footer>
+				<a href="https://www.scrembl.com/privacy-notice.html">Privacy Notice</a>
+			</footer>
     </div>
   );
 }
