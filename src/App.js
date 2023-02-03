@@ -2,7 +2,6 @@ import {
 	useRef,
 	useState
 }                          from 'react';
-import Button              from '@mui/material/Button';
 import HelpModal           from './components/HelpModal.js';
 import Message             from './components/Message.js';
 import Scrembled           from './components/Scrembled.js';

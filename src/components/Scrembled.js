@@ -2,6 +2,7 @@ import TextField           from '@mui/material/TextField';
 import Button              from '@mui/material/Button';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import NoEncryptionGmailerrorredIcon from '@mui/icons-material/NoEncryptionGmailerrorred';
+import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 
 export default function Scrembled ({
 	scrembledInputRef,
@@ -38,9 +39,9 @@ export default function Scrembled ({
 						text={scrembledInputRef.current.value}
 						onCopy={() => setCopiedScrembled (true)}
 					>
-						<Button variant="contained">
-							{copiedScrembled ? "Copied to Clipboard!" : "Copy to Clipboard"}
-						</Button>
+						<ContentPasteIcon color={copiedScrembled ? "success" : "action"} fontSize="large">
+							{/*{copiedScrembled ? "Copied to Clipboard!" : "Copy to Clipboard"} */}
+						</ContentPasteIcon>
 					</CopyToClipboard>
 			}
 		</div>
