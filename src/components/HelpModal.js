@@ -25,7 +25,7 @@ export default function HelpModal() {
 						might not like. Or it had hidden or deleted or blocked it.
 					</div>
 					<div className="mb-3">
-						Type your message into the top box, press Scremble, copy to clipboard then paste the
+						Type your message into the top box, press Scrembl, copy to clipboard then paste the
 						message into the Social Media as a post.
 					</div>
 					<div className="mb-3">
