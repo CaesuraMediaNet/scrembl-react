@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {
 	useRef,
 	useState
@@ -7,6 +8,8 @@ import Message             from './components/Message.js';
 import Scrembled           from './components/Scrembled.js';
 import UnScrembled         from './components/UnScrembled.js';
 import DeleteOutlineIcon   from '@mui/icons-material/DeleteOutline';
+import Button              from 'react-bootstrap/Button';
+
 import './App.css';
 
 function App() {
@@ -48,7 +51,10 @@ function App() {
     <div style={{width : "70%", margin : "10%"}} >
 			<div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
 				<h1>Scremble - Obfusticate messages</h1>
-				<DeleteOutlineIcon color="action" fontSize="large" onClick={() => clearText()}></DeleteOutlineIcon>
+				<Button onClick={() => clearText()} variant="primary">
+					<DeleteOutlineIcon /> Clear
+				</Button>
+
 				<HelpModal />
 			</div>
 

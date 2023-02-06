@@ -1,97 +1,48 @@
-/* https://mui.com/material-ui/react-dialog/ */
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
-import QuizIcon            from '@mui/icons-material/Quiz';
-
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialogContent-root': {
-    padding: theme.spacing(2),
-  },
-  '& .MuiDialogActions-root': {
-    padding: theme.spacing(1),
-  },
-}));
-
-function BootstrapDialogTitle(props) {
-  const { children, onClose, ...other } = props;
-
-  return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-      {children}
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </DialogTitle>
-  );
-}
-
-BootstrapDialogTitle.propTypes = {
-  children: PropTypes.node,
-  onClose: PropTypes.func.isRequired,
-};
+import React, { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import Modal from 'react-bootstrap/Modal';
 
 export default function HelpModal() {
-  const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const [show, setShow] = useState(false);
 
-  return (
-    <div>
-      <QuizIcon color="action" fontSize="large" onClick={handleClickOpen}>
-      </QuizIcon>
-      <BootstrapDialog
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
-      >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Scrembl : Obfusticate messages to send as weird text to be unScrembld by your friend.
-        </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <Typography gutterBottom>
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+	return (
+    <>
+      <Button variant="primary" onClick={handleShow}>
+        <HelpOutlineIcon /> Help
+      </Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Scrembl HowTo</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+					<div className="mb-3">
 						Suppose you have a secret message to send to your Social Media group that you think the Social Media platfom
 						might not like. Or it had hidden or deleted or blocked it.
-          </Typography>
-          <Typography gutterBottom>
-						Type your message into the top box, press Scremble, copy to clipboard then paste the message into the Social Media as a post.
-          </Typography>
-          <Typography gutterBottom>
+					</div>
+					<div className="mb-3">
+						Type your message into the top box, press Scremble, copy to clipboard then paste the
+						message into the Social Media as a post.
+					</div>
+					<div className="mb-3">
 						All members of your group can then copy it from the Social Media platfom into the middle box, and press 
 						UnScrembl - they will see your original message.
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose}>
+					</div>
+					<div className="mb-3">
+						<b>Note that no messages are sent to any server, or saved in any database!</b>
+					</div>
+				</Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleClose}>
             Got It!
           </Button>
-        </DialogActions>
-      </BootstrapDialog>
-    </div>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 }
 
