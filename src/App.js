@@ -11,8 +11,6 @@ import DeleteOutlineIcon   from '@mui/icons-material/DeleteOutline';
 import Button              from 'react-bootstrap/Button';
 import { Base64 }          from 'js-base64';
 
-import './App.css';
-
 function App() {
 
 	const messageInputRef                                             = useRef (null);
@@ -24,10 +22,17 @@ function App() {
 	const [copiedScrembled, setCopiedScrembled]                       = useState (false);
 	const [copiedUnScrembled, setCopiedUnScrembled]                   = useState (false);
 
+	// const [epochOffset, setEpochOffset]                               = useState (0);
+	// const [hexArr, setHexArr]                                         = useState ([]);
+	// const [base64, setBase64]                                         = useState ('');
+
+	// ^1de%1f2%1f3%1fd%1aa%1f3%1fd%1aa%1eb%1aa%1f7%1ef%1fd%1fd%1eb%1f1%1ef%1aa%1eb%1fe%1aa%1c0%1fe%1f2%1aa%1d0%1ef%1ec%1bc%1ba%1bc%1bd%1aa%1bb%1c0%1bb%1c1$MThh
+	//
+
 	var now         = new Date();
   var epochOffset = Math.floor(now/8.64e7) - 19000;
   var hex         = epochOffset.toString(16)
-  var hex_arr     = hex.split ('');
+  var hexArr      = hex.split ('');
   var base64      = Base64.encode(hex);
 
 	const scremble = () => {
@@ -36,10 +41,10 @@ function App() {
     var offset      = 0;
     for (var i=0; i < chars.length; i++) {
       switch (i) {
-        case 0  : offset = parseInt (hex_arr[0], 16); //eslint-no-fallthrough
-        case 1  : offset = parseInt (hex_arr[1], 16); //eslint-no-fallthrough
-        case 2  : offset = parseInt (hex_arr[2], 16); //eslint-no-fallthrough
-        case 3  : offset = parseInt (hex_arr[3], 16); //eslint-no-fallthrough
+        case 0  : offset = parseInt (hexArr[0], 16); //eslint-no-fallthrough
+        case 1  : offset = parseInt (hexArr[1], 16); //eslint-no-fallthrough
+        case 2  : offset = parseInt (hexArr[2], 16); //eslint-no-fallthrough
+        case 3  : offset = parseInt (hexArr[3], 16); //eslint-no-fallthrough
         default : offset = 0;
       }
       var asci = (parseInt (offset + messageInputRef.current.value.charCodeAt(i))
@@ -63,10 +68,10 @@ function App() {
       var offset      = 0;
       for (var i=0; i < asciis.length; i++) {
         switch (i) {
-          case 0  : offset = parseInt (hex_arr[0], 16); //eslint-no-fallthrough
-          case 1  : offset = parseInt (hex_arr[1], 16); //eslint-no-fallthrough
-          case 2  : offset = parseInt (hex_arr[2], 16); //eslint-no-fallthrough
-          case 3  : offset = parseInt (hex_arr[3], 16); //eslint-no-fallthrough
+          case 0  : offset = parseInt (hexArr[0], 16); //eslint-no-fallthrough
+          case 1  : offset = parseInt (hexArr[1], 16); //eslint-no-fallthrough
+          case 2  : offset = parseInt (hexArr[2], 16); //eslint-no-fallthrough
+          case 3  : offset = parseInt (hexArr[3], 16); //eslint-no-fallthrough
           default : offset = 0;
         }
         var ch = String.fromCharCode((parseInt (asciis[i], 16) - offset - parseInt (epochOffset)));
