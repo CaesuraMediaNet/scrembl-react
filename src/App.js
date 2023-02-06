@@ -9,6 +9,7 @@ import Scrembled           from './components/Scrembled.js';
 import UnScrembled         from './components/UnScrembled.js';
 import DeleteOutlineIcon   from '@mui/icons-material/DeleteOutline';
 import Button              from 'react-bootstrap/Button';
+import { Base64 }          from 'js-base64';
 
 import './App.css';
 
@@ -23,16 +24,60 @@ function App() {
 	const [copiedScrembled, setCopiedScrembled]                       = useState (false);
 	const [copiedUnScrembled, setCopiedUnScrembled]                   = useState (false);
 
+	var now         = new Date();
+  var epochOffset = Math.floor(now/8.64e7) - 19000;
+  var hex         = epochOffset.toString(16)
+  var hex_arr     = hex.split ('');
+  var base64      = Base64.encode(hex);
+
 	const scremble = () => {
-		const is_scrembled = "%" + messageInputRef.current.value + "%";
-		scrembledInputRef.current.value = is_scrembled;
+    var chars       = messageInputRef.current.value.split('');
+    var output_text = "^";
+    var offset      = 0;
+    for (var i=0; i < chars.length; i++) {
+      switch (i) {
+        case 0  : offset = parseInt (hex_arr[0], 16); //eslint-no-fallthrough
+        case 1  : offset = parseInt (hex_arr[1], 16); //eslint-no-fallthrough
+        case 2  : offset = parseInt (hex_arr[2], 16); //eslint-no-fallthrough
+        case 3  : offset = parseInt (hex_arr[3], 16); //eslint-no-fallthrough
+        default : offset = 0;
+      }
+      var asci = (parseInt (offset + messageInputRef.current.value.charCodeAt(i))
+				+ parseInt (epochOffset)).toString(16);
+      output_text += asci + "%";
+    }
+    output_text = output_text.replace (/%$/, '$') + base64;
+
+		scrembledInputRef.current.value = output_text;
 		scrembledInputRef.current.focus();
 		setCopyScrembledToClipboard (true);
   };
 
 	const unscremble = () => {
-		const is_unscrembled = scrembledInputRef.current.value.replace (/%/g, '');
-		unScrembledInputRef.current.value = is_unscrembled;
+		var enc_base64      = scrembledInputRef.current.value.replace(/^.*\$/, '');
+		var output_text = "";
+    if (enc_base64 !== base64) {
+			output_text = "Out of date Scrembl, sorry!";
+    } else {
+      var asciis      = scrembledInputRef.current.value.replace(/^\^/, '').replace(/\$.+$/, '').split('%');
+      var offset      = 0;
+      for (var i=0; i < asciis.length; i++) {
+        switch (i) {
+          case 0  : offset = parseInt (hex_arr[0], 16); //eslint-no-fallthrough
+          case 1  : offset = parseInt (hex_arr[1], 16); //eslint-no-fallthrough
+          case 2  : offset = parseInt (hex_arr[2], 16); //eslint-no-fallthrough
+          case 3  : offset = parseInt (hex_arr[3], 16); //eslint-no-fallthrough
+          default : offset = 0;
+        }
+        var ch = String.fromCharCode((parseInt (asciis[i], 16) - offset - parseInt (epochOffset)));
+        if (!ch.match(/^[\P{Cc}\P{Cn}\P{Cs}]+$/gu)) {
+          output_text = "Out of date Scrembl, sorry!";
+          break;
+        }
+        output_text += ch;
+      }
+		}
+		unScrembledInputRef.current.value = output_text;
 		unScrembledInputRef.current.focus();
 		setCopyUnScrembledToClipboard (true);
   };
